@@ -10,33 +10,29 @@ public class AudioController : MonoBehaviour {
 	public static AudioController instance = null;
 	public PlayerState currentLocation = PlayerState.SAFE;
 	
-	public enum PlayerState {SAFE, EXPLORE, CAUTIOUS, DANGER};
+	public enum PlayerState {SAFE, EXPLORE, CAUTIOUS, SEEN};
 
-	public AudioSource exploreSource, safeSource, cautiousSource, dangerSource;
+	public AudioSource exploreSource, safeSource, cautiousSource;
 
 	public AudioSource explore { get; private set; }
 	public AudioSource safe { get; private set; }
 	public AudioSource cautious { get; private set; }
-	public AudioSource danger { get; private set; }
 	public AudioSource game_sfx, player_sfx, ai_sfx;
 
 	public float raiseVolBy = 0.1f, lowerVolBy = 0.01f;
 
-	[Tooltip("This boolean determines whether both AudioSources will loop.  Only works prior to runtime.")]
-	public bool loop = true;
 	[Tooltip("While the game is running, press to apply the normalVol variable on the Normal Audio volume.")]
 	public bool applyMusicVolume = false;
 	[Tooltip("While the game is running, press on applyNormal to apply the normalVol variable on the Normal Audio volume.")]
 	public float musicVolume = 1f;
-	[Tooltip("This boolean determines if StartBass and EndBass can be used.")]
-	private bool mute = false;
 
 	public float generalSFXVolume = 0.4f;
 	public float gameSFXVolume = 1f;
 
 	public AudioClip defeatSFX, gameStartSFX, 
 		doorOpenSFX, doorCloseSFX, 
-		footstepSFX, pickupSFX;
+		footstepSFX, pickupSFX,
+		seenSFX;
 
 	public enum SFXstatus { READY, ENTRY, EXIT };
 	public SFXstatus soundStatus { get; private set; }
@@ -58,17 +54,21 @@ public class AudioController : MonoBehaviour {
 		if(safe == null) safe = safeSource;
 		if(explore == null) explore = exploreSource;
 		if(cautious == null) cautious = cautiousSource;
-		if(danger == null) danger = dangerSource;
 		
 		setAllMusicVolume(0f);
 		
 		soundStatus = SFXstatus.READY;
 	}
 
+	public bool seen = false;
 	public void Update() {
 		//Find our location
-
 		updateMusicVolume(currentLocation);
+
+		if (seen) {
+			PlaySeenSFX();
+			seen = false;
+		}
 	}
 
 	public void updateMusicVolume(PlayerState biome) {
@@ -89,16 +89,17 @@ public class AudioController : MonoBehaviour {
 		safe.volume = vol;
 		explore.volume = vol;
 		cautious.volume = vol;
-		danger.volume = vol;
 	}
 
 	private AudioSource lastSrc = null;
 	private void raiseVolume(AudioSource src, float vol) {
 		if(src.volume == 1f) return;
-		if(!src.isPlaying) src.Play();
+		if(!src.isPlaying) { 
+			src.Play();
 
-		if(lastSrc != null && !lastSrc.Equals(src)) {
-			src.time = lastSrc.time;
+			if(lastSrc != null && !lastSrc.Equals(src)) {
+				src.time = lastSrc.time;
+			}
 		}
 		
 		src.volume += vol;
@@ -111,7 +112,7 @@ public class AudioController : MonoBehaviour {
 
 		src.volume -= vol;
 
-		if(src.volume == 0) src.Stop();
+		//if(src.volume == 0) src.Stop();
 	}
 
 	private void raiseBiomeVolume(PlayerState biome, float vol) {
@@ -121,8 +122,6 @@ public class AudioController : MonoBehaviour {
 			raiseVolume(explore, vol);
 		} else if (biome == PlayerState.CAUTIOUS) {
 			raiseVolume(cautious, vol);
-		} else if (biome == PlayerState.DANGER) {
-			raiseVolume(danger, vol);
 		}
 	}
 
@@ -130,7 +129,6 @@ public class AudioController : MonoBehaviour {
 		lowerVolume(safe, vol);
 		lowerVolume(explore, vol);
 		lowerVolume(cautious, vol);
-		lowerVolume(danger, vol);
 	}
 
 	private float overallVolume = 1.0f;
@@ -172,12 +170,47 @@ public class AudioController : MonoBehaviour {
 		safe.time = 0;
 		explore.time = 0;
 		cautious.time = 0;
-		danger.time = 0;
 
 		safe.Play();
 		explore.Play();
 		cautious.Play();
-		danger.Play();
+	}
+
+	private float[] savedVol;
+	private void PauseSongs() {
+		safe.mute = true;
+		explore.mute = true;
+		cautious.mute = true;
+
+		//savedVol = new float[3] {safe.volume, explore.volume, cautious.volume};
+		//setAllMusicVolume(0f);
+
+		/*safe.Pause();
+		explore.Pause();
+		cautious.Pause();*/
+	}
+
+	private void UnPauseSongs() {
+		safe.mute = false;
+		explore.mute = false;
+		cautious.mute = false;
+
+		/*safe.volume = savedVol[0];
+		explore.volume = savedVol[1];
+		cautious.volume = savedVol[2];*/
+
+		/*safe.UnPause();
+		explore.UnPause();
+		cautious.UnPause();*/
+
+		currentLocation = PlayerState.CAUTIOUS;
+	}
+
+	public void PlaySeenSFX() {
+		PauseSongs();
+		player_sfx.volume = musicVolume;
+		player_sfx.PlayOneShot(seenSFX);
+		StartCoroutine (UnPauseAfterTime(seenSFX.length+0.1f));
 	}
 
 	public void PlayPickupSFX() {
@@ -203,6 +236,12 @@ public class AudioController : MonoBehaviour {
 		game_sfx.PlayOneShot(defeatSFX);
 
 		StartCoroutine (LoadAfterTime(defeatSFX.length+0.1f, scene));
+	}
+
+	IEnumerator UnPauseAfterTime(float time) {
+		yield return StartCoroutine(WaitForRealSeconds(time));
+
+		UnPauseSongs();
 	}
 
 	IEnumerator LoadAfterTime(float time, string scene) {
