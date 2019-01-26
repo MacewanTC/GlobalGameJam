@@ -27,7 +27,9 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D body;
 
     private float frozenTime;
-    private bool isFrozen = false; 
+    private bool isFrozen = false;
+
+    private float visibility;
 
     void Start()
     {
@@ -52,6 +54,13 @@ public class PlayerController : MonoBehaviour
         {
             gameManager.EndGame();
         }
+
+        visibility = 1.0f - hygiene;
+    }
+
+    public float GetVisibility()
+    {
+        return visibility;
     }
 
     public void Freeze(float freezeTime)
