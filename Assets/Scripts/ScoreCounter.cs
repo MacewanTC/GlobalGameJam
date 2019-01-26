@@ -5,18 +5,18 @@ using UnityEngine.UI;
 
 public class ScoreCounter : MonoBehaviour
 {
-    public Text text;
+    private Text text;
 
     private float score = 0.0f;
 
     void Start()
     {
-        
+        text = gameObject.GetComponent(typeof(Text)) as Text;
     }
 
     void Update()
     {
         score += Time.deltaTime;
-        text.text = ((int)score).ToString();
+        text.text = ((int)(15 * score)).ToString();
     }
 }
