@@ -572,8 +572,8 @@ MonoBehaviour:
   gameSFXVolume: 1
   defeatSFX: {fileID: 8300000, guid: 94d7d7bfc7d96a344a209e59dfe0f924, type: 3}
   gameStartSFX: {fileID: 0}
-  doorOpenSFX: {fileID: 0}
-  doorCloseSFX: {fileID: 0}
+  doorOpenSFX: {fileID: 8300000, guid: 58082fb1a28ae374590a6d22bc16a9ff, type: 3}
+  doorCloseSFX: {fileID: 8300000, guid: a396f2c9f8fe36d4a9115a482d069675, type: 3}
   stepSFX: {fileID: 8300000, guid: 416ab8acda11d4e41ac7033602d42102, type: 3}
   pickupSFX: {fileID: 8300000, guid: ae8924bb368e11347bf430bddea699a9, type: 3}
   seenSFX: {fileID: 8300000, guid: a437159e16ab49548871fc87e8c49ece, type: 3}
