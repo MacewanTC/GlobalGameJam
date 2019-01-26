@@ -31,7 +31,7 @@ public class AudioController : MonoBehaviour {
 
 	public AudioClip defeatSFX, gameStartSFX, 
 		doorOpenSFX, doorCloseSFX, 
-		footstepSFX, pickupSFX,
+		stepSFX, pickupSFX,
 		seenSFX;
 
 	public enum SFXstatus { READY, ENTRY, EXIT };
@@ -60,7 +60,7 @@ public class AudioController : MonoBehaviour {
 		soundStatus = SFXstatus.READY;
 	}
 
-	public bool seen = false;
+	public bool seen = false, playerStep = false;
 	public void Update() {
 		//Find our location
 		updateMusicVolume(currentLocation);
@@ -68,6 +68,10 @@ public class AudioController : MonoBehaviour {
 		if (seen) {
 			PlaySeenSFX();
 			seen = false;
+		}
+
+		if (playerStep) {
+			updatePlayerStep();
 		}
 	}
 
@@ -82,6 +86,17 @@ public class AudioController : MonoBehaviour {
 		if (applyMusicVolume) {
 			raiseBiomeVolume(biome, musicVolume);
 			applyMusicVolume = false;
+		}
+	}
+
+	private float lastStep = 0, timeToNextStep = 0;
+	public void updatePlayerStep() {
+		if (lastStep == 0 || lastStep + timeToNextStep < Time.time) {
+			//Debug.Log("Step");
+			PlayPlayerStepSFX();
+
+			lastStep = Time.time;
+			timeToNextStep = Random.Range(0.3f, 0.5f);
 		}
 	}
 
@@ -216,6 +231,24 @@ public class AudioController : MonoBehaviour {
 	public void PlayPickupSFX() {
 		game_sfx.volume = gameSFXVolume;
 		game_sfx.PlayOneShot(pickupSFX);
+	}
+
+	public void StartPlayerStep() {
+		playerStep = true;
+	}
+
+	public void StopPlayerStep() {
+		playerStep = false;
+	}
+
+	public void PlayPlayerStepSFX() {
+		player_sfx.volume = gameSFXVolume;
+		player_sfx.PlayOneShot(stepSFX);
+	}
+
+	public void PlayHomeownerStepSFX() {
+		ai_sfx.volume = gameSFXVolume;
+		ai_sfx.PlayOneShot(stepSFX);
 	}
 
 	IEnumerator WaitForRealSeconds(float time) {
