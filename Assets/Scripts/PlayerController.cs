@@ -8,10 +8,13 @@ public class PlayerController : MonoBehaviour
 {
     public float hunger = 1.0f;
     public float sleep = 1.0f;
+    public float hygiene = 1.0f;
     public float hungerDecay =  0.01f;
     public float sleepDecay = 0.01f;
+    public float hygieneDecay = 0.01f;
     public Slider hungerSlider;
     public Slider sleepSlider;
+    public Slider hygieneSlider;
 
     public float passOutTime = 3.0f;
     public float passOutRegen = 0.1f;
@@ -37,6 +40,7 @@ public class PlayerController : MonoBehaviour
         {
             ChangeNeed(1, -hungerDecay * Time.deltaTime);
             ChangeNeed(2, -sleepDecay * Time.deltaTime);
+            ChangeNeed(3, -hygieneDecay * Time.deltaTime);
         }
         if (sleep == 0.0f)
         {
@@ -73,6 +77,12 @@ public class PlayerController : MonoBehaviour
             sleep += delta;
             sleep = Mathf.Clamp(sleep, 0.0f, 1.0f);
             sleepSlider.value = sleep;
+        }
+        else if (need == 3)
+        {
+            hygiene += delta;
+            hygiene = Mathf.Clamp(hygiene, 0.0f, 1.0f);
+            hygieneSlider.value = hygiene;
         }
 
     }
