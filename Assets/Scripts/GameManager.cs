@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
         {
             if (Input.GetButton("Fire1"))
             {
-				EndGame();
+                SceneManager.LoadScene(nextScene);
             }
         }
     }
