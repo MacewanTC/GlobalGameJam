@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D body;
 
+    private float frozenTime;
+    private bool isFrozen = false; 
+
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
@@ -26,35 +29,60 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        ChangeNeeds(1, hungerDecay * Time.deltaTime);
-        ChangeNeeds(2, sleepDecay * Time.deltaTime);
+        if (!isFrozen)
+        {
+            ChangeNeed(1, -hungerDecay * Time.deltaTime);
+            ChangeNeed(2, -sleepDecay * Time.deltaTime);
+        }
+    }
+
+    public void Freeze(float freezeTime)
+    {
+        if (freezeTime >= 0.0f)
+        {
+            isFrozen = true;
+        }
+        frozenTime = Mathf.Max(frozenTime, freezeTime);
     }
 
     // enum need { hunger = 1, sleep = 2}
-    void ChangeNeeds(int need, float delta) 
+    public void ChangeNeed(int need, float delta) 
     {
         if (need == 1)
         {
-            hunger -= delta;
+            hunger += delta;
             hungerSlider.value = hunger;
         }
         else if (need == 2)
         {
-            sleep -= delta;
+            sleep += delta;
             sleepSlider.value = sleep;
         }
+
     }
 
     void FixedUpdate()
     {
-        Vector2 moveDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        if (Input.GetButton("Fire2"))
+        if (isFrozen)
         {
-            body.MovePosition((Vector2)transform.position + (moveDirection.normalized * altSpeed * Time.deltaTime));
+            frozenTime -= Time.deltaTime;
+            if (frozenTime <= 0.0f)
+            {
+                isFrozen = false;
+                frozenTime = 0.0f;
+            }
         }
         else
         {
-            body.MovePosition((Vector2)transform.position + (moveDirection.normalized * speed * Time.deltaTime));
+            Vector2 moveDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            if (Input.GetButton("Fire2"))
+            {
+                body.MovePosition((Vector2)transform.position + (moveDirection.normalized * altSpeed * Time.deltaTime));
+            }
+            else
+            {
+                body.MovePosition((Vector2)transform.position + (moveDirection.normalized * speed * Time.deltaTime));
+            }
         }
     }
 }

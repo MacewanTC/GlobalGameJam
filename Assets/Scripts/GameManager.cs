@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    void EndGame()
+    public void EndGame()
     {
         finished = true;
         SceneManager.LoadScene(nextScene);
