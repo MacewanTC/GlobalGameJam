@@ -13,9 +13,13 @@ public class PlayerController : MonoBehaviour
     public Slider hungerSlider;
     public Slider sleepSlider;
 
+    public float passOutTime = 3.0f;
+    public float passOutRegen = 0.1f;
 
     public float speed = 3.0f;
     public float altSpeed = 6.0f;
+
+    public GameManager gameManager;
 
     private Rigidbody2D body;
 
@@ -34,6 +38,16 @@ public class PlayerController : MonoBehaviour
             ChangeNeed(1, -hungerDecay * Time.deltaTime);
             ChangeNeed(2, -sleepDecay * Time.deltaTime);
         }
+        if (sleep == 0.0f)
+        {
+            Freeze(passOutTime);
+            ChangeNeed(2, passOutRegen);
+        }
+        
+        if (hunger == 0.0f)
+        {
+            gameManager.EndGame();
+        }
     }
 
     public void Freeze(float freezeTime)
@@ -51,11 +65,13 @@ public class PlayerController : MonoBehaviour
         if (need == 1)
         {
             hunger += delta;
+            hunger = Mathf.Clamp(hunger, 0.0f, 1.0f);
             hungerSlider.value = hunger;
         }
         else if (need == 2)
         {
             sleep += delta;
+            sleep = Mathf.Clamp(sleep, 0.0f, 1.0f);
             sleepSlider.value = sleep;
         }
 

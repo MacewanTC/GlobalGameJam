@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviour
                 EndGame();
             }
         }
-
     }
 
     public void EndGame()
