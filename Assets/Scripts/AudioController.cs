@@ -280,6 +280,6 @@ public class AudioController : MonoBehaviour {
 	IEnumerator LoadAfterTime(float time, string scene) {
 		yield return StartCoroutine(WaitForRealSeconds(time));
 
-		//SceneManager.LoadScene(scene);
+		SceneManager.LoadScene(scene);
 	}
 }

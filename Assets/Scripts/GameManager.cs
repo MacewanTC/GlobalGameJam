@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
         {
             if (Input.GetButton("Fire1"))
             {
-                EndGame();
+				EndGame();
             }
         }
     }
@@ -34,6 +34,6 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         finished = true;
-        SceneManager.LoadScene(nextScene);
+		AudioController.instance.OnDeath(nextScene);//SceneManager.LoadScene(nextScene);
     }
 }
