@@ -110,6 +110,10 @@ public class PlayerController : MonoBehaviour
         else
         {
             Vector2 moveDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
+			if (moveDirection.magnitude > 0.1) AudioController.instance.StartPlayerStep();
+			else AudioController.instance.StopPlayerStep();
+				
             if (Input.GetButton("Fire2"))
             {
                 body.MovePosition((Vector2)transform.position + (moveDirection.normalized * altSpeed * Time.deltaTime));

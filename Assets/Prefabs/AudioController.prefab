@@ -574,11 +574,12 @@ MonoBehaviour:
   gameStartSFX: {fileID: 0}
   doorOpenSFX: {fileID: 0}
   doorCloseSFX: {fileID: 0}
-  footstepSFX: {fileID: 0}
+  stepSFX: {fileID: 8300000, guid: 416ab8acda11d4e41ac7033602d42102, type: 3}
   pickupSFX: {fileID: 8300000, guid: ae8924bb368e11347bf430bddea699a9, type: 3}
   seenSFX: {fileID: 8300000, guid: a437159e16ab49548871fc87e8c49ece, type: 3}
   sfxLength: 0.4
   seen: 0
+  playerStep: 0
 --- !u!1 &6322235081800602212
 GameObject:
   m_ObjectHideFlags: 0
