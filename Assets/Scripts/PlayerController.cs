@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     public float altSpeed = 6.0f;
 
     private GameManager gameManager;
+	private Animator animator;
 
     private Rigidbody2D body;
 
@@ -35,6 +36,8 @@ public class PlayerController : MonoBehaviour
     {
         body = GetComponent<Rigidbody2D>();
 		gameManager = FindObjectOfType<GameManager>();
+
+		animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -112,8 +115,15 @@ public class PlayerController : MonoBehaviour
         {
             Vector2 moveDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
-			if (moveDirection.magnitude > 0.1) AudioController.instance.StartPlayerStep();
-			else AudioController.instance.StopPlayerStep();
+			if (moveDirection.magnitude > 0.1) StartStepSFX();
+			else StopStepSFX();
+
+			if (moveDirection.magnitude != 0) {
+				//Rotate Towards Direction
+				transform.rotation = Quaternion.Slerp(transform.rotation, 
+					Quaternion.AngleAxis((Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg) + 270, Vector3.forward), 
+					Time.deltaTime * speed * 3);
+			}
 				
             if (Input.GetButton("Fire2"))
             {
@@ -125,4 +135,14 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+	private void StartStepSFX() {
+		animator.SetBool("Walking", true);
+		AudioController.instance.StartPlayerStep();
+	}
+
+	private void StopStepSFX() {
+		animator.SetBool("Walking", false);
+		AudioController.instance.StopPlayerStep();
+	}
 }
