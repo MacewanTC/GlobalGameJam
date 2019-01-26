@@ -48,13 +48,13 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         Vector2 moveDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        if (true) // TODO: if not altspeed
+        if (Input.GetButton("Fire2"))
         {
-            body.MovePosition((Vector2)transform.position + (moveDirection.normalized * speed * Time.deltaTime));
+            body.MovePosition((Vector2)transform.position + (moveDirection.normalized * altSpeed * Time.deltaTime));
         }
         else
         {
-            body.MovePosition((Vector2)transform.position + (moveDirection.normalized * altSpeed * Time.deltaTime));
+            body.MovePosition((Vector2)transform.position + (moveDirection.normalized * speed * Time.deltaTime));
         }
     }
 }
