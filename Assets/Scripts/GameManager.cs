@@ -8,6 +8,13 @@ public class GameManager : MonoBehaviour
     public bool finished = false;
     public string nextScene;
 
+    private float startTime;
+
+    void Start()
+    {
+        startTime = Time.time;
+    }
+
     void Update()
     {
         if (finished)
@@ -17,10 +24,14 @@ public class GameManager : MonoBehaviour
                 EndGame();
             }
         }
-
     }
 
-    void EndGame()
+    public float GetStartTime()
+    {
+        return startTime;
+    }
+
+    public void EndGame()
     {
         finished = true;
         SceneManager.LoadScene(nextScene);
