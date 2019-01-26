@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 3.0f;
     public float altSpeed = 6.0f;
 
-    public GameManager gameManager;
+    private GameManager gameManager;
 
     private Rigidbody2D body;
 
@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+		gameManager = FindObjectOfType<GameManager>();
     }
 
     void Update()
