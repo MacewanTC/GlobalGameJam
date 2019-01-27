@@ -151,8 +151,6 @@ public class Homeowner : MonoBehaviour
 				AudioController.instance.currentLocation != AudioController.PlayerState.SEEN) {
 			AudioController.instance.IsSeen();
 		}
-
-		checkAlarm();
     }
 
     void selectDestination()
@@ -162,11 +160,6 @@ public class Homeowner : MonoBehaviour
         var index = Random.Range(0, destination.adjacents.Count);
         destination = destination.adjacents[index];
     }
-
-	void checkAlarm() {
-		if (currentAlarm > 0) AudioController.instance.currentLocation = AudioController.PlayerState.CAUTIOUS;
-		else AudioController.instance.currentLocation = AudioController.PlayerState.EXPLORE;
-	}
 
     void OnDrawGizmosSelected()
     {

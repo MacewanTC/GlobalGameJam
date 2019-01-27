@@ -76,9 +76,10 @@ public class AudioController : MonoBehaviour {
 	}
 
 	public void IsSeen() {
-		//seen = true;
+        //seen = true;
+        if (currentLocation == PlayerState.SEEN) return;
 
-		currentLocation = PlayerState.SEEN;
+        currentLocation = PlayerState.SEEN;
 		PlaySeenSFX();
 	}
 
