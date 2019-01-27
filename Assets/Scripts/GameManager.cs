@@ -18,30 +18,22 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         timeOfDay += Time.deltaTime;
-        if (timeOfDay >= 1.0f)
-        {
-            timeOfDay = 0.0f;
-        }
+        if (timeOfDay >= 1.0f) timeOfDay = 0.0f;
 
-        if (finished)
-        {
-            if (Input.GetButton("Fire1"))
-            {
-                SceneManager.LoadScene(nextScene);
-            }
-        }
+        if (finished && Input.GetButton("Fire1")) SceneManager.LoadScene(nextScene);
     }
 
     public void EndGame()
     {
         if (finished != true)
 		{
-			finished = true;
             //Time.timeScale = 0;
 
 			FindObjectOfType<PlayerController>().animator.SetTrigger("Death");
 			FindObjectOfType<FollowPlayer>().StartZoom();
             AudioController.instance.OnDeath(nextScene);//SceneManager.LoadScene(nextScene);
         }
+
+		finished = true;
     }
 }
