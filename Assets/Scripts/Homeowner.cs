@@ -151,6 +151,8 @@ public class Homeowner : MonoBehaviour
         {
             currentAlarm = Mathf.Lerp(currentAlarm, 0, alarmDecay);
         }
+
+		checkAlarm();
     }
 
     void selectDestination()
@@ -160,6 +162,11 @@ public class Homeowner : MonoBehaviour
         var index = Random.Range(0, destination.adjacents.Count);
         destination = destination.adjacents[index];
     }
+
+	void checkAlarm() {
+		if (currentAlarm > 0) AudioController.instance.currentLocation = AudioController.PlayerState.CAUTIOUS;
+		else AudioController.instance.currentLocation = AudioController.PlayerState.EXPLORE;
+	}
 
     void OnDrawGizmosSelected()
     {
