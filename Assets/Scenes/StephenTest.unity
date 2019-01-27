@@ -390,6 +390,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 420871601}
+    - target: {fileID: 7316312745519542694, guid: 8351558d8c6fd6b49a6014c9c1d0998e,
+        type: 3}
+      propertyPath: need
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8351558d8c6fd6b49a6014c9c1d0998e, type: 3}
 --- !u!1001 &833696445
@@ -640,6 +645,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Constraints
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5776578786710961893, guid: 0283c7bdfd76c2e40af203bce5279374,
+        type: 3}
+      propertyPath: m_SleepingMode
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0283c7bdfd76c2e40af203bce5279374, type: 3}

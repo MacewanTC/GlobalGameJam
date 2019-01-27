@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D body;
 
     private float frozenTime;
-    private bool isFrozen = false;
+    public  bool isFrozen = false;
 
     private float visibility;
 
@@ -78,6 +78,42 @@ public class PlayerController : MonoBehaviour
 
     // enum need { hunger = 1, sleep = 2}
 	public enum Need { hunger, sleep, hygiene};
+	public float GetNeed(Need need) {
+		if (need == Need.hunger)
+		{
+			return hunger;
+		}
+		else if (need == Need.sleep)
+		{
+			return sleep;
+		}
+		else if (need == Need.hygiene)
+		{
+			return hygiene;
+		}
+		return sleep;
+	}
+
+	public void SetNeed(Need need, float delta) 
+	{
+		if (need == Need.hunger)
+		{
+			hunger = delta;
+			hungerSlider.value = hunger;
+		}
+		else if (need == Need.sleep)
+		{
+			sleep = delta;
+			sleepSlider.value = sleep;
+		}
+		else if (need == Need.hygiene)
+		{
+			hygiene = delta;
+			hygieneSlider.value = hygiene;
+		}
+
+	}
+
     public void ChangeNeed(Need need, float delta) 
     {
         if (need == Need.hunger)
