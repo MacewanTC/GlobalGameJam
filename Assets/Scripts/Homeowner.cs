@@ -52,14 +52,22 @@ public class Homeowner : MonoBehaviour
     void Update()
     {
         timeInState += Time.deltaTime;
-        checkLOS();
+        updateLos();
+        updateAlarm();
+        updateState();
+    }
+
+    private void updateState()
+    {
         switch (currentState)
         {
             case HomeownerState.Moving:
-				if (sawAnyTargetThisFrame) {//Transition to focusing
-					transform.GetChild(0).GetComponent<Animator>().SetTrigger("Point");
+                if (sawAnyTargetThisFrame)
+                {//Transition to focusing
+                    transform.GetChild(0).GetComponent<Animator>().SetTrigger("Point");
                     currentState = HomeownerState.Focusing;
-				} else if (!destination)
+                }
+                else if (!destination)
                     break;
 
                 var direction = directionToDestination();
@@ -67,7 +75,7 @@ public class Homeowner : MonoBehaviour
                 if (distance < destination.arrivalRadius) //Transition to waiting
                 {
                     waitingTime = Random.Range(destination.minDuration, destination.maxDuration);
-                    currentState = HomeownerState.Waiting; 
+                    currentState = HomeownerState.Waiting;
                 }
                 else //Continue moving to and facing destination
                 {
@@ -82,7 +90,7 @@ public class Homeowner : MonoBehaviour
                 waitingTime -= Time.deltaTime;
                 if (sawAnyTargetThisFrame)
                 {
-					transform.GetChild(0).GetComponent<Animator>().SetTrigger("Point");
+                    transform.GetChild(0).GetComponent<Animator>().SetTrigger("Point");
                     currentState = HomeownerState.Focusing;
                 }
                 else if (waitingTime <= 0)
@@ -95,7 +103,7 @@ public class Homeowner : MonoBehaviour
                 if (currentAlarm >= maxAlarm)
                 {
                     gameManager.EndGame();
-					return;
+                    return;
                 }
                 if (!sawAnyTargetThisFrame)
                 {
@@ -113,7 +121,7 @@ public class Homeowner : MonoBehaviour
             case HomeownerState.Looking:
                 if (sawAnyTargetThisFrame)
                 {
-					transform.GetChild(0).GetComponent<Animator>().SetTrigger("Point");
+                    transform.GetChild(0).GetComponent<Animator>().SetTrigger("Point");
                     currentState = HomeownerState.Focusing;
                 }
                 else if (timeInState >= lookingTime)
@@ -126,41 +134,54 @@ public class Homeowner : MonoBehaviour
         }
     }
 
-    private void checkLOS()
+    private void updateAlarm()
+    {
+        if (!sawAnyTargetThisFrame)
+        {
+            currentAlarm = Mathf.Lerp(currentAlarm, 0, alarmDecay);
+            if (currentAlarm < maxAlarm / 4)
+                AudioController.instance.ReturnToDefaultMusic();
+        }
+        else if (!(AudioController.instance.currentLocation == AudioController.PlayerState.CAUTIOUS ||
+          AudioController.instance.currentLocation == AudioController.PlayerState.SEEN) && !gameManager.finished)
+        {
+            AudioController.instance.ActivateSeenMusic();
+        }
+    }
+
+    private void updateLos()
     {
         sawAnyTargetThisFrame = false;
         foreach (var target in targets)
         {
+            if (!inFOV(target.transform) || !inLOS(target.transform))
+                continue; //Target is outside our fov or los radius, dont bother with raycasting
+
+            Debug.Log("FOV & LOS tests passed, raycasting to target...");
             var direction = target.transform.position - transform.position;
-            var facing = transform.GetChild(0).up;
-            var angle = Vector3.Angle(facing, direction);
-            if (angle > fov / 2 || direction.magnitude > losRadius)
-                continue;
             var raycast = Physics2D.Raycast(transform.position, direction, losRadius, losMask);
             if (raycast.collider && raycast.collider.tag == "Player")
             {
                 sawAnyTargetThisFrame = true;
-                var alarm = losFalloff.Evaluate(1 - raycast.fraction) / 10f;
+                var alarm = losFalloff.Evaluate(1 - raycast.fraction);
                 currentAlarm += alarm;
-				//Debug.Log(alarm + " Current: "+currentAlarm);
+				Debug.Log(string.Format("{0} can see {1}.", name, target.name));
                 lastSeen = raycast.point;
             }
+            else if (raycast.collider)
+            {
+                Debug.Log(string.Format("Raycast from {0} to {1} hit {2} instead.", name, target.name, raycast.collider.name));
+            }
         }
-        if (!sawAnyTargetThisFrame)
-        {
-            currentAlarm = Mathf.Lerp(currentAlarm, 0, alarmDecay);
-			if (currentAlarm < maxAlarm / 4)
-				AudioController.instance.ReturnToDefaultMusic();
-		} else if (!(AudioController.instance.currentLocation == AudioController.PlayerState.CAUTIOUS ||
-			AudioController.instance.currentLocation == AudioController.PlayerState.SEEN) && !gameManager.finished) {
-			AudioController.instance.ActivateSeenMusic();
-		}
     }
 
     void selectDestination()
     {
         if (!destination)
+        {
+            Debug.Log("Homeowner cannot get next destination because it does not have starting destination.");
             return;
+        }
         var index = Random.Range(0, destination.adjacents.Count);
         destination = destination.adjacents[index];
     }
@@ -193,5 +214,25 @@ public class Homeowner : MonoBehaviour
     Vector3 directionToDestination()
     {
         return destination.transform.position - transform.position;
+    }
+
+    bool inFOV(Transform target)
+    {
+        var direction = target.position - transform.position;
+        var facing = transform.GetChild(0).up;
+        var angle = Vector2.Angle(facing, direction);
+        Debug.Log(string.Format("Angle from homeowner to target is {0}.", angle));
+        var result = angle < fov / 2;
+        if (!result)
+            Debug.Log("Target outside fov angle.");
+        return result;
+    }
+
+    bool inLOS(Transform target)
+    {
+        bool result = Vector2.Distance(target.position, transform.position) <= losRadius;
+        if (!result)
+            Debug.Log("Target outside los radius.");
+        return result;
     }
 }
