@@ -31,6 +31,7 @@ public class TriggerRegenNeed : MonoBehaviour
 
     void OnTriggerStay2D()
     {
+        Debug.Log("H");
         if (Input.GetButton("Fire1"))
         {
             player.Freeze(regenTime);
