@@ -76,8 +76,10 @@ public class AudioController : MonoBehaviour {
 	}
 
 	public void IsSeen() {
-		seen = true;
+		//seen = true;
+
 		currentLocation = PlayerState.SEEN;
+		PlaySeenSFX();
 	}
 
 	public void updateMusicVolume(PlayerState biome) {
