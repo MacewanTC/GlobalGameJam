@@ -158,7 +158,7 @@ public class Homeowner : MonoBehaviour
 
             Debug.Log("FOV & LOS tests passed, raycasting to target...");
             var direction = target.transform.position - transform.position;
-            var raycast = Physics2D.Raycast(transform.position, direction, losRadius, losMask);
+			var raycast = Physics2D.Raycast(transform.position, direction, losRadius * FindObjectOfType<PlayerController>().GetVisibility(), losMask);
             if (raycast.collider && raycast.collider.tag == "Player")
             {
                 sawAnyTargetThisFrame = true;
@@ -229,7 +229,7 @@ public class Homeowner : MonoBehaviour
 
     bool inLOS(Transform target)
     {
-        bool result = Vector2.Distance(target.position, transform.position) <= losRadius;
+		bool result = Vector2.Distance(target.position, transform.position) <= FindObjectOfType<PlayerController>().GetVisibility() * losRadius;
         if (!result)
             Debug.Log("Target outside los radius.");
         return result;
