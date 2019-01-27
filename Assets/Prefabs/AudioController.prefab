@@ -571,7 +571,7 @@ MonoBehaviour:
   musicVolume: 1
   generalSFXVolume: 0.4
   gameSFXVolume: 1
-  defeatSFX: {fileID: 8300000, guid: a4d94de6583fdc74984ab1679c8662d2, type: 3}
+  defeatSFX: {fileID: 8300000, guid: a437159e16ab49548871fc87e8c49ece, type: 3}
   gameStartSFX: {fileID: 0}
   doorOpenSFX: {fileID: 8300000, guid: 58082fb1a28ae374590a6d22bc16a9ff, type: 3}
   doorCloseSFX: {fileID: 8300000, guid: a396f2c9f8fe36d4a9115a482d069675, type: 3}
