@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Waypoint : MonoBehaviour
 {
-    public float minDuration, maxDuration;
-    public float arrivalRadius;
+    public float minDuration = 1, maxDuration = 3;
+    public float arrivalRadius = 0.5f;
     public List<Waypoint> adjacents; 
 
     // Start is called before the first frame update
@@ -20,7 +20,7 @@ public class Waypoint : MonoBehaviour
         
     }
 
-    void OnDrawGizmos()
+    void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(transform.position, arrivalRadius);
         foreach (var adj in adjacents)
