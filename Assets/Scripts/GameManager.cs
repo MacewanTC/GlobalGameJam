@@ -10,6 +10,11 @@ public class GameManager : MonoBehaviour
 
     public float timeOfDay = 0.3f;
 
+    void Start()
+    {
+        Time.timeScale = 1;
+    }
+
     void Update()
     {
         timeOfDay += Time.deltaTime;
@@ -30,7 +35,7 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         finished = true;
-        //Time.timeScale = 0;
+        Time.timeScale = 0;
 		AudioController.instance.OnDeath(nextScene);//SceneManager.LoadScene(nextScene);
     }
 }
