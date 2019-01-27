@@ -449,7 +449,7 @@ PrefabInstance:
     - target: {fileID: 5776578786710961892, guid: 0283c7bdfd76c2e40af203bce5279374,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.47
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5776578786710961892, guid: 0283c7bdfd76c2e40af203bce5279374,
         type: 3}
@@ -534,6 +534,41 @@ PrefabInstance:
     - target: {fileID: 1333845861, guid: 0283c7bdfd76c2e40af203bce5279374, type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5266567659250449989, guid: 0283c7bdfd76c2e40af203bce5279374,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749045685590052262, guid: 0283c7bdfd76c2e40af203bce5279374,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749045685590052262, guid: 0283c7bdfd76c2e40af203bce5279374,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5266567659267774957, guid: 0283c7bdfd76c2e40af203bce5279374,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5266567659267774957, guid: 0283c7bdfd76c2e40af203bce5279374,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5266567658298754077, guid: 0283c7bdfd76c2e40af203bce5279374,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5266567658298754077, guid: 0283c7bdfd76c2e40af203bce5279374,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0283c7bdfd76c2e40af203bce5279374, type: 3}
@@ -1623,6 +1658,11 @@ PrefabInstance:
     - target: {fileID: 6322235081778112319, guid: 9d2f7559fb2339046aa5cf59ad15e402,
         type: 3}
       propertyPath: defeatSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: a4d94de6583fdc74984ab1679c8662d2, type: 3}
+    - target: {fileID: 6322235081778112319, guid: 9d2f7559fb2339046aa5cf59ad15e402,
+        type: 3}
+      propertyPath: seenSFX
       value: 
       objectReference: {fileID: 8300000, guid: 9ab2179c03985014e856608fc199bd47, type: 3}
     m_RemovedComponents: []

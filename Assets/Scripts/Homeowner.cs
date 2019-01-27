@@ -147,7 +147,10 @@ public class Homeowner : MonoBehaviour
         if (!sawAnyTargetThisFrame)
         {
             currentAlarm = Mathf.Lerp(currentAlarm, 0, alarmDecay);
-        }
+		} else if (AudioController.instance.currentLocation != AudioController.PlayerState.CAUTIOUS ||
+				AudioController.instance.currentLocation != AudioController.PlayerState.SEEN) {
+			AudioController.instance.IsSeen();
+		}
 
 		checkAlarm();
     }

@@ -75,6 +75,11 @@ public class AudioController : MonoBehaviour {
 		}
 	}
 
+	public void IsSeen() {
+		seen = true;
+		currentLocation = PlayerState.SEEN;
+	}
+
 	public void updateMusicVolume(PlayerState biome) {
 		// Raise Volume for the biome we are in
 		raiseBiomeVolume(biome, raiseVolBy+lowerVolBy);
