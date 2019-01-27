@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         finished = true;
+        //Time.timeScale = 0;
 		AudioController.instance.OnDeath(nextScene);//SceneManager.LoadScene(nextScene);
     }
 }

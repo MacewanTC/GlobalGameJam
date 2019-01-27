@@ -132,7 +132,7 @@ public class Homeowner : MonoBehaviour
                 continue;          
 
             var raycast = Physics2D.Raycast(transform.position, direction, losRadius, losMask);
-            if (raycast.collider)
+            if (raycast.collider && raycast.collider.tag == "Player")
             {
                 sawAnyTargetThisFrame = true;
                 var alarm = losFalloff.Evaluate(1 - raycast.fraction);
