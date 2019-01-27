@@ -941,6 +941,16 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 1920693132}
+    - target: {fileID: 6684535782650953266, guid: 182579b6d803d3642ab0891b8382d52a,
+        type: 3}
+      propertyPath: alarmDecay
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6684535782650953266, guid: 182579b6d803d3642ab0891b8382d52a,
+        type: 3}
+      propertyPath: maxAlarm
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 182579b6d803d3642ab0891b8382d52a, type: 3}
 --- !u!114 &1164661974 stripped

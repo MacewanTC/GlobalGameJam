@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class AudioController : MonoBehaviour {
 	public static AudioController instance = null;
 	public PlayerState currentLocation = PlayerState.SAFE;
+	public PlayerState defaultLocation = PlayerState.SAFE;
 	
 	public enum PlayerState {SAFE, EXPLORE, CAUTIOUS, SEEN};
 
@@ -75,12 +76,16 @@ public class AudioController : MonoBehaviour {
 		}
 	}
 
-	public void IsSeen() {
+	public void ActivateSeenMusic() {
         //seen = true;
         if (currentLocation == PlayerState.SEEN) return;
 
         currentLocation = PlayerState.SEEN;
 		PlaySeenSFX();
+	}
+
+	public void ReturnToDefaultMusic() {
+		currentLocation = defaultLocation;
 	}
 
 	public void updateMusicVolume(PlayerState biome) {
@@ -95,6 +100,14 @@ public class AudioController : MonoBehaviour {
 			raiseBiomeVolume(biome, musicVolume);
 			applyMusicVolume = false;
 		}
+	}
+
+	public void StartPlayerStep() {
+		playerStep = true;
+	}
+
+	public void StopPlayerStep() {
+		playerStep = false;
 	}
 
 	private float lastStep = 0, timeToNextStep = 0;
@@ -241,14 +254,6 @@ public class AudioController : MonoBehaviour {
 		game_sfx.PlayOneShot(pickupSFX);
 	}
 
-	public void StartPlayerStep() {
-		playerStep = true;
-	}
-
-	public void StopPlayerStep() {
-		playerStep = false;
-	}
-
 	public void PlayPlayerStepSFX() {
 		player_sfx.volume = gameSFXVolume;
 		player_sfx.PlayOneShot(stepSFX);
@@ -272,6 +277,7 @@ public class AudioController : MonoBehaviour {
 
 	public void OnDeath(string scene) {
 		setAllMusicVolume(0f);
+		StopPlayerStep();
 
 		game_sfx.volume = gameSFXVolume;
 		game_sfx.PlayOneShot(defeatSFX);

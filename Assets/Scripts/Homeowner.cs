@@ -6,7 +6,7 @@ public class Homeowner : MonoBehaviour
 {
     public enum HomeownerState
     {
-        Moving = 0, Waiting, Focusing, Looking, Pointing
+        Moving = 0, Waiting, Focusing, Looking
     }
 
     public HomeownerState initalState = HomeownerState.Moving;
@@ -56,9 +56,10 @@ public class Homeowner : MonoBehaviour
         switch (currentState)
         {
             case HomeownerState.Moving:
-                if (sawAnyTargetThisFrame) //Transition to focusing
+				if (sawAnyTargetThisFrame) {//Transition to focusing
+					transform.GetChild(0).GetComponent<Animator>().SetTrigger("Point");
                     currentState = HomeownerState.Focusing;
-                else if (!destination)
+				} else if (!destination)
                     break;
 
                 var direction = directionToDestination();
@@ -81,6 +82,7 @@ public class Homeowner : MonoBehaviour
                 waitingTime -= Time.deltaTime;
                 if (sawAnyTargetThisFrame)
                 {
+					transform.GetChild(0).GetComponent<Animator>().SetTrigger("Point");
                     currentState = HomeownerState.Focusing;
                 }
                 else if (waitingTime <= 0)
@@ -92,8 +94,6 @@ public class Homeowner : MonoBehaviour
             case HomeownerState.Focusing:
                 if (currentAlarm >= maxAlarm)
                 {
-					currentState = HomeownerState.Pointing;
-					transform.GetChild(0).GetComponent<Animator>().SetTrigger("Point");
                     gameManager.EndGame();
 					return;
                 }
@@ -113,6 +113,7 @@ public class Homeowner : MonoBehaviour
             case HomeownerState.Looking:
                 if (sawAnyTargetThisFrame)
                 {
+					transform.GetChild(0).GetComponent<Animator>().SetTrigger("Point");
                     currentState = HomeownerState.Focusing;
                 }
                 else if (timeInState >= lookingTime)
@@ -139,17 +140,20 @@ public class Homeowner : MonoBehaviour
             if (raycast.collider && raycast.collider.tag == "Player")
             {
                 sawAnyTargetThisFrame = true;
-                var alarm = losFalloff.Evaluate(1 - raycast.fraction);
+                var alarm = losFalloff.Evaluate(1 - raycast.fraction) / 10f;
                 currentAlarm += alarm;
+				Debug.Log(alarm + " Current: "+currentAlarm);
                 lastSeen = raycast.point;
             }
         }
         if (!sawAnyTargetThisFrame)
         {
             currentAlarm = Mathf.Lerp(currentAlarm, 0, alarmDecay);
+			if (currentAlarm < maxAlarm / 4)
+				AudioController.instance.ReturnToDefaultMusic();
 		} else if (AudioController.instance.currentLocation != AudioController.PlayerState.CAUTIOUS ||
 				AudioController.instance.currentLocation != AudioController.PlayerState.SEEN) {
-			AudioController.instance.IsSeen();
+			AudioController.instance.ActivateSeenMusic();
 		}
     }
 
