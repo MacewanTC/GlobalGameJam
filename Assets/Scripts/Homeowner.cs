@@ -142,7 +142,7 @@ public class Homeowner : MonoBehaviour
                 sawAnyTargetThisFrame = true;
                 var alarm = losFalloff.Evaluate(1 - raycast.fraction) / 10f;
                 currentAlarm += alarm;
-				Debug.Log(alarm + " Current: "+currentAlarm);
+				//Debug.Log(alarm + " Current: "+currentAlarm);
                 lastSeen = raycast.point;
             }
         }
@@ -151,8 +151,8 @@ public class Homeowner : MonoBehaviour
             currentAlarm = Mathf.Lerp(currentAlarm, 0, alarmDecay);
 			if (currentAlarm < maxAlarm / 4)
 				AudioController.instance.ReturnToDefaultMusic();
-		} else if (AudioController.instance.currentLocation != AudioController.PlayerState.CAUTIOUS ||
-				AudioController.instance.currentLocation != AudioController.PlayerState.SEEN) {
+		} else if (!(AudioController.instance.currentLocation == AudioController.PlayerState.CAUTIOUS ||
+			AudioController.instance.currentLocation == AudioController.PlayerState.SEEN) && !gameManager.finished) {
 			AudioController.instance.ActivateSeenMusic();
 		}
     }

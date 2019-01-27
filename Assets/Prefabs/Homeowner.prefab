@@ -146,8 +146,8 @@ MonoBehaviour:
   initalState: 0
   m_currentState: 0
   currentAlarm: 0
-  maxAlarm: 1
-  alarmDecay: 1
+  maxAlarm: 8
+  alarmDecay: 0.3
   movementSpeed: 4
   fov: 60
   losRadius: 5
@@ -187,4 +187,3 @@ MonoBehaviour:
     m_RotationOrder: 4
   sawAnyTargetThisFrame: 0
   lastSeen: {x: 0, y: 0}
-  gameManager: {fileID: 0}
