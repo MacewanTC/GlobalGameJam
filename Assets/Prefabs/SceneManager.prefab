@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   finished: 0
-  nextScene: Scenes/LossScreen
+  nextScene: Scenes/Main GGJ
   timeOfDay: 0.3
