@@ -431,6 +431,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bed
       objectReference: {fileID: 0}
+    - target: {fileID: 9047663878962897978, guid: c880d05666be5c04db9206fbdcc86766,
+        type: 3}
+      propertyPath: regenAmount
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2720013048938756095, guid: c880d05666be5c04db9206fbdcc86766,
         type: 3}
       propertyPath: m_LocalPosition.x

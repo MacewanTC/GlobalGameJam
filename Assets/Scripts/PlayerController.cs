@@ -50,7 +50,9 @@ public class PlayerController : MonoBehaviour
         }
         if (sleep == 0.0f)
         {
-            Freeze(passOutTime);
+			Freeze(passOutTime);
+			animator.SetTrigger("Collapse");
+			StartCoroutine(WakeAfterTime(passOutTime));
             ChangeNeed(Need.sleep, passOutRegen);
         }
         
@@ -59,7 +61,7 @@ public class PlayerController : MonoBehaviour
             gameManager.EndGame();
         }
 
-        visibility = 1.0f - hygiene;
+        visibility = 1f + 1.0f - hygiene;
     }
 
     public float GetVisibility()
@@ -181,5 +183,18 @@ public class PlayerController : MonoBehaviour
 	private void StopStepSFX() {
 		animator.SetBool("Walking", false);
 		AudioController.instance.StopPlayerStep();
+	}
+
+
+	IEnumerator WakeAfterTime(float time) {
+		yield return StartCoroutine(WaitForRealSeconds(time));
+
+		animator.SetTrigger("GetUp");
+	}
+
+	IEnumerator WaitForRealSeconds(float time) {
+		float start = Time.realtimeSinceStartup;
+		while (Time.realtimeSinceStartup < start + time)
+			yield return null;
 	}
 }
