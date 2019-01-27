@@ -6,7 +6,7 @@ public class Homeowner : MonoBehaviour
 {
     public enum HomeownerState
     {
-        Moving = 0, Waiting, Focusing, Looking
+        Moving = 0, Waiting, Focusing, Looking, Pointing
     }
 
     public HomeownerState initalState = HomeownerState.Moving;
@@ -37,11 +37,13 @@ public class Homeowner : MonoBehaviour
     public AnimationCurve losFalloff;
     public bool sawAnyTargetThisFrame;
     public Vector2 lastSeen;
-    public GameManager gameManager;
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
+		gameManager = FindObjectOfType<GameManager>();
+
         currentState = initalState;
         selectDestination();
     }
@@ -90,7 +92,10 @@ public class Homeowner : MonoBehaviour
             case HomeownerState.Focusing:
                 if (currentAlarm >= maxAlarm)
                 {
+					currentState = HomeownerState.Pointing;
+					transform.GetChild(0).GetComponent<Animator>().SetTrigger("Point");
                     gameManager.EndGame();
+					return;
                 }
                 if (!sawAnyTargetThisFrame)
                 {

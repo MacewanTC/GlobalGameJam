@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 5776578786710961893}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,6 +159,7 @@ MonoBehaviour:
   speed: 3
   altSpeed: 6
   animator: {fileID: 0}
+  isFrozen: 0
 --- !u!61 &4847576924351535613
 BoxCollider2D:
   m_ObjectHideFlags: 0
