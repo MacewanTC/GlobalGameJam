@@ -146,11 +146,10 @@ MonoBehaviour:
   initalState: 0
   m_currentState: 0
   currentAlarm: 0
-  maxAlarm: 8
-  alarmDecay: 0.3
+  maxAlarm: 0.75
   movementSpeed: 4
   fov: 60
-  losRadius: 5
+  losRadius: 8
   waitingTime: 0
   timeInState: 0
   lookingTime: 3

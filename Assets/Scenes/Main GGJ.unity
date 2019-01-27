@@ -611,6 +611,12 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 352563017724240939, guid: c880d05666be5c04db9206fbdcc86766,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a36218ddba8f75f4f8e065d169524252,
+        type: 3}
     - target: {fileID: 2814583046638551751, guid: c880d05666be5c04db9206fbdcc86766,
         type: 3}
       propertyPath: m_Offset.y
@@ -641,12 +647,6 @@ PrefabInstance:
       propertyPath: m_Size.x
       value: 10.0736
       objectReference: {fileID: 0}
-    - target: {fileID: 352563017724240939, guid: c880d05666be5c04db9206fbdcc86766,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: a36218ddba8f75f4f8e065d169524252,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c880d05666be5c04db9206fbdcc86766, type: 3}
 --- !u!1 &729995228
@@ -787,12 +787,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5266567658298754077, guid: 0283c7bdfd76c2e40af203bce5279374,
+    - target: {fileID: 4749045685590052262, guid: 0283c7bdfd76c2e40af203bce5279374,
         type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5266567658298754077, guid: 0283c7bdfd76c2e40af203bce5279374,
+    - target: {fileID: 4749045685590052262, guid: 0283c7bdfd76c2e40af203bce5279374,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -807,12 +807,12 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4749045685590052262, guid: 0283c7bdfd76c2e40af203bce5279374,
+    - target: {fileID: 5266567658298754077, guid: 0283c7bdfd76c2e40af203bce5279374,
         type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4749045685590052262, guid: 0283c7bdfd76c2e40af203bce5279374,
+    - target: {fileID: 5266567658298754077, guid: 0283c7bdfd76c2e40af203bce5279374,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1709,6 +1709,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SceneManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8280625540103466886, guid: 98e1e7f7ba8fe5b43b0a43eb8f7b5a5d,
+        type: 3}
+      propertyPath: nextScene
+      value: Scenes/LossScreen
       objectReference: {fileID: 0}
     - target: {fileID: 8280625540103466881, guid: 98e1e7f7ba8fe5b43b0a43eb8f7b5a5d,
         type: 3}

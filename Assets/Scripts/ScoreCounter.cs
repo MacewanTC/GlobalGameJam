@@ -17,6 +17,6 @@ public class ScoreCounter : MonoBehaviour
     void Update()
     {
         score += Time.deltaTime;
-        text.text = ((int)(15 * score)).ToString();
+        text.text = ((int)(score)).ToString() + " Seconds";
     }
 }
