@@ -281,6 +281,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   finished: 0
   nextScene: Scenes/LossScreen
+  timeOfDay: 0.3
 --- !u!114 &206480039 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5266567657509991423, guid: 722322142b0c1f84ca0a836005883aeb,
@@ -565,6 +566,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5776578786710961898, guid: 0283c7bdfd76c2e40af203bce5279374,
+        type: 3}
+      propertyPath: hungerSlider
+      value: 
+      objectReference: {fileID: 206480039}
+    - target: {fileID: 5776578786710961898, guid: 0283c7bdfd76c2e40af203bce5279374,
+        type: 3}
+      propertyPath: sleepSlider
+      value: 
+      objectReference: {fileID: 1676449191}
+    - target: {fileID: 5776578786710961898, guid: 0283c7bdfd76c2e40af203bce5279374,
+        type: 3}
+      propertyPath: hygieneSlider
+      value: 
+      objectReference: {fileID: 340445487}
     - target: {fileID: 5776578786710961892, guid: 0283c7bdfd76c2e40af203bce5279374,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -620,21 +636,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5776578786710961898, guid: 0283c7bdfd76c2e40af203bce5279374,
+    - target: {fileID: 5776578786710961893, guid: 0283c7bdfd76c2e40af203bce5279374,
         type: 3}
-      propertyPath: hungerSlider
-      value: 
-      objectReference: {fileID: 206480039}
-    - target: {fileID: 5776578786710961898, guid: 0283c7bdfd76c2e40af203bce5279374,
-        type: 3}
-      propertyPath: sleepSlider
-      value: 
-      objectReference: {fileID: 1676449191}
-    - target: {fileID: 5776578786710961898, guid: 0283c7bdfd76c2e40af203bce5279374,
-        type: 3}
-      propertyPath: hygieneSlider
-      value: 
-      objectReference: {fileID: 340445487}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0283c7bdfd76c2e40af203bce5279374, type: 3}
 --- !u!114 &1676449191 stripped
@@ -664,7 +670,7 @@ PrefabInstance:
     - target: {fileID: 6322235081778112316, guid: 9d2f7559fb2339046aa5cf59ad15e402,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 6322235081778112316, guid: 9d2f7559fb2339046aa5cf59ad15e402,
         type: 3}

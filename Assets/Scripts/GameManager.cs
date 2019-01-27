@@ -8,15 +8,16 @@ public class GameManager : MonoBehaviour
     public bool finished = false;
     public string nextScene;
 
-    private float startTime;
-
-    void Start()
-    {
-        startTime = Time.time;
-    }
+    public float timeOfDay = 0.3f;
 
     void Update()
     {
+        timeOfDay += Time.deltaTime;
+        if (timeOfDay >= 1.0f)
+        {
+            timeOfDay = 0.0f;
+        }
+
         if (finished)
         {
             if (Input.GetButton("Fire1"))
@@ -26,14 +27,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public float GetStartTime()
-    {
-        return startTime;
-    }
-
     public void EndGame()
     {
         finished = true;
+        //Time.timeScale = 0;
 		AudioController.instance.OnDeath(nextScene);//SceneManager.LoadScene(nextScene);
     }
 }

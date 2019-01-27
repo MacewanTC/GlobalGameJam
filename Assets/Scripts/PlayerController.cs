@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     public float altSpeed = 6.0f;
 
     private GameManager gameManager;
-	private Animator animator;
+	public Animator animator;
 
     private Rigidbody2D body;
 
@@ -44,14 +44,14 @@ public class PlayerController : MonoBehaviour
     {
         if (!isFrozen)
         {
-            ChangeNeed(1, -hungerDecay * Time.deltaTime);
-            ChangeNeed(2, -sleepDecay * Time.deltaTime);
-            ChangeNeed(3, -hygieneDecay * Time.deltaTime);
+            ChangeNeed(Need.hunger, -hungerDecay * Time.deltaTime);
+            ChangeNeed(Need.sleep, -sleepDecay * Time.deltaTime);
+            ChangeNeed(Need.hygiene, -hygieneDecay * Time.deltaTime);
         }
         if (sleep == 0.0f)
         {
             Freeze(passOutTime);
-            ChangeNeed(2, passOutRegen);
+            ChangeNeed(Need.sleep, passOutRegen);
         }
         
         if (hunger == 0.0f)
@@ -77,21 +77,22 @@ public class PlayerController : MonoBehaviour
     }
 
     // enum need { hunger = 1, sleep = 2}
-    public void ChangeNeed(int need, float delta) 
+	public enum Need { hunger, sleep, hygiene};
+    public void ChangeNeed(Need need, float delta) 
     {
-        if (need == 1)
+        if (need == Need.hunger)
         {
             hunger += delta;
             hunger = Mathf.Clamp(hunger, 0.0f, 1.0f);
             hungerSlider.value = hunger;
         }
-        else if (need == 2)
+        else if (need == Need.sleep)
         {
             sleep += delta;
             sleep = Mathf.Clamp(sleep, 0.0f, 1.0f);
             sleepSlider.value = sleep;
         }
-        else if (need == 3)
+        else if (need == Need.hygiene)
         {
             hygiene += delta;
             hygiene = Mathf.Clamp(hygiene, 0.0f, 1.0f);

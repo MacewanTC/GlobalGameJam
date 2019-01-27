@@ -5,16 +5,17 @@ using UnityEngine.UI;
 
 public class TriggerRegenNeed : MonoBehaviour
 {
-    public PlayerController player;
+    private PlayerController player;
     public float regenAmount = 0.5f;
     public float regenTime = 2.0f;
-    public int need = 1; // See player controller :: ChangeNeed for enum
+	public PlayerController.Need need = PlayerController.Need.hunger; // See player controller :: ChangeNeed for enum
 
 
     public Text text; 
 
     void Start()
     {
+		player = FindObjectOfType<PlayerController>();
         text.enabled = false;
     }
 
@@ -34,6 +35,14 @@ public class TriggerRegenNeed : MonoBehaviour
         {
             player.Freeze(regenTime);
             player.ChangeNeed(need, regenAmount);
+
+			if (need == PlayerController.Need.sleep) {
+				player.animator.SetTrigger("Collapse");
+			} else if (need == PlayerController.Need.hunger) {
+				player.animator.SetTrigger("Eat");
+			} else {
+				player.animator.SetTrigger("Interact");
+			}
         }
 
     }
