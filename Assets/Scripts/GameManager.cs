@@ -35,10 +35,13 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         if (finished != true)
-        {
-            Time.timeScale = 0;
+		{
+			finished = true;
+            //Time.timeScale = 0;
+
+			FindObjectOfType<PlayerController>().animator.SetTrigger("Death");
+			FindObjectOfType<FollowPlayer>().StartZoom();
             AudioController.instance.OnDeath(nextScene);//SceneManager.LoadScene(nextScene);
         }
-        finished = true;
     }
 }

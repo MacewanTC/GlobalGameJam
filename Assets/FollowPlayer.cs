@@ -5,7 +5,8 @@ using UnityEngine;
 public class FollowPlayer : MonoBehaviour
 {
 	private PlayerController player;
-	private float distanceFromPlayerLayer = 10;
+	private float distanceFromPlayerLayer = 10, startZoomTime, zoomPeriod = 1f;
+	private bool zoom = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,8 +14,18 @@ public class FollowPlayer : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-		transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -1*distanceFromPlayerLayer);
+		float z = -1*distanceFromPlayerLayer;
+
+		if (zoom) Camera.main.orthographicSize = Mathf.Lerp(5, 1, (Time.time - startZoomTime)/zoomPeriod);
+
+		transform.position = new Vector3(player.transform.position.x, player.transform.position.y, z);
     }
+
+	public void StartZoom() {
+		zoom = true;
+		startZoomTime = Time.time;
+
+	}
 }
