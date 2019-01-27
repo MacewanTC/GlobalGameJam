@@ -43,5 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c6fe5c5d8a0f6f4c8cd56a8acf984ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  finished: 1
-  nextScene: Scenes/TeaganTestScene
+  finished: 0
+  nextScene: Scenes/LossScreen
+  timeOfDay: 0.3
