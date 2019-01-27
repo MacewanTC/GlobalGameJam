@@ -12,7 +12,7 @@ public class TriggerRegenNeed : MonoBehaviour
 	public PlayerController.Need need = PlayerController.Need.hunger; // See player controller :: ChangeNeed for enum
 
 
-    public Text text; 
+	public Image text;//Text text; 
 
     void Start()
     {
