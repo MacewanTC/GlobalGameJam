@@ -23,7 +23,6 @@ public class Homeowner : MonoBehaviour
     public HomeownerState m_currentState;
     public float currentAlarm,
         maxAlarm,
-        alarmDecay,
         movementSpeed,
         fov,
         losRadius,
@@ -138,7 +137,7 @@ public class Homeowner : MonoBehaviour
     {
         if (!sawAnyTargetThisFrame)
         {
-            currentAlarm = Mathf.Lerp(currentAlarm, 0, alarmDecay);
+            currentAlarm = Mathf.Lerp(currentAlarm, 0, Time.deltaTime);
             if (currentAlarm < maxAlarm / 4)
                 AudioController.instance.ReturnToDefaultMusic();
         }
@@ -163,7 +162,7 @@ public class Homeowner : MonoBehaviour
             if (raycast.collider && raycast.collider.tag == "Player")
             {
                 sawAnyTargetThisFrame = true;
-                var alarm = losFalloff.Evaluate(1 - raycast.fraction);
+                var alarm = losFalloff.Evaluate(1 - raycast.fraction) * Time.deltaTime;
                 currentAlarm += alarm;
 				Debug.Log(string.Format("{0} can see {1}.", name, target.name));
                 lastSeen = raycast.point;
